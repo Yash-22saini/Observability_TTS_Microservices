@@ -1,0 +1,12 @@
+[project]
+name = "tts-service"
+version = "1.0.0"
+description = "Observability-enabled TTS Microservice"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "prometheus-client>=0.21.0",
+    "edge-tts>=6.1.9",
+    "pydantic>=2.0.0",
+]

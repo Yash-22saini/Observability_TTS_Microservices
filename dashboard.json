@@ -1,0 +1,71 @@
+{
+  "dashboard_name": "TTS Microservice Monitoring",
+  "description": "Grafana ya koi bhi Prometheus-compatible tool mein import karo",
+  "panels": [
+    {
+      "title": "Throughput — Requests per Second",
+      "type": "graph",
+      "prometheus_query": "rate(tts_requests_total[1m])",
+      "unit": "req/s",
+      "description": "Last 1 minute mein kitni requests per second aayi"
+    },
+    {
+      "title": "Error Rate (%)",
+      "type": "stat",
+      "prometheus_query": "rate(tts_errors_total[5m]) / rate(tts_requests_total[5m]) * 100",
+      "unit": "percent",
+      "thresholds": {
+        "green": "0-1",
+        "yellow": "1-5",
+        "red": "5+"
+      }
+    },
+    {
+      "title": "P95 Latency",
+      "type": "graph",
+      "prometheus_query": "histogram_quantile(0.95, rate(tts_request_duration_seconds_bucket[5m]))",
+      "unit": "seconds",
+      "description": "95% requests is se kam time mein complete ho rahi hain"
+    },
+    {
+      "title": "P50 Latency (Median)",
+      "type": "graph",
+      "prometheus_query": "histogram_quantile(0.50, rate(tts_request_duration_seconds_bucket[5m]))",
+      "unit": "seconds"
+    },
+    {
+      "title": "Active Requests",
+      "type": "stat",
+      "prometheus_query": "tts_active_requests",
+      "unit": "count",
+      "description": "Currently processing kitni requests hain"
+    },
+    {
+      "title": "Total Requests by Status",
+      "type": "pie",
+      "prometheus_query": "sum by (status) (tts_requests_total)",
+      "description": "2xx vs 4xx vs 5xx breakdown"
+    },
+    {
+      "title": "Audio Size Distribution",
+      "type": "heatmap",
+      "prometheus_query": "rate(tts_audio_size_bytes_bucket[5m])",
+      "unit": "bytes"
+    }
+  ],
+  "setup_instructions": {
+    "step1": "Prometheus install karo aur yeh config add karo",
+    "prometheus_scrape_config": {
+      "scrape_configs": [
+        {
+          "job_name": "tts-service",
+          "static_configs": [{ "targets": ["localhost:8000"] }],
+          "metrics_path": "/metrics"
+        }
+      ]
+    },
+    "step2": "Grafana install karo, Prometheus ko datasource add karo",
+    "step3": "Upar diye queries ko Grafana panels mein add karo",
+    "quick_test": "Bina Grafana ke bhi /dashboard endpoint se JSON stats dekh sakte hain"
+  }
+}
