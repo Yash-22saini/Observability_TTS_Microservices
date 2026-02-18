@@ -4,7 +4,7 @@ A production-ready Text-to-Speech (TTS) Microservice built with FastAPI and Micr
 
 ✅ Structured Logging
 ✅ Request Trace IDs
-✅ Prometheus Metrics (Latency, Error Rate, Throughput)
+✅ Metrics (Latency, Error Rate, Throughput)
 ✅ Monitoring Dashboard JSON
 ✅ Health Checks
 ✅ Graceful Shutdown Handling
@@ -15,7 +15,7 @@ Convert text into MP3 speech audio
 
 Structured request logging with Trace ID
 
-Prometheus metrics tracking
+metrics tracking
 
 Latency, Error Rate, Throughput monitoring
 
@@ -27,17 +27,14 @@ Simple monitoring dashboard JSON
 Method	Endpoint	Description
 GET	/health	Service health check
 POST	/tts	Generate speech audio
-GET	/metrics	Prometheus metrics
+GET	/metrics	 metrics
 GET	/dashboard	Monitoring summary
 
 📊 Metrics Tracked
 
 Request Count (Throughput)
-
 Request Latency
-
 Error Rate
-
 Audio File Size
 
 📂 Storage Output
